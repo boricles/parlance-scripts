@@ -1,0 +1,1 @@
+java -cp lib/*:parlance-extractor.jar eu.parlance.extractor.Extractor "$@" 
