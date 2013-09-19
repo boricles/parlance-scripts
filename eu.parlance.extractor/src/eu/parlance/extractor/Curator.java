@@ -85,6 +85,13 @@ public class Curator {
 		String utterance = "";
 		try
 		{
+			//get rid of *-x.wav in the filename
+			int index = fileName.indexOf("-x.wav");
+			if (index != -1) {
+				fileName = fileName.substring(0,index);
+				fileName = fileName + ".wav";
+			}
+			System.out.println("Processing the file " + fileName);
 			String turnNum = null;
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -105,6 +112,7 @@ public class Curator {
 						String name = e.getAttribute("fname");
 						if (name.equals(fileName)) {
 							turnNum = current.getAttributeNode("turnnum").getNodeValue();
+							System.out.println("Processing the file " + fileName);
 							break;
 						}
 						else
@@ -157,7 +165,7 @@ public class Curator {
 			sessionFile = folder + "/" +logLocation + "/session.xml";
 		
 		int index1 = line.lastIndexOf("/");
-		String fileName = line.substring(index1+1);
+		String fileName = line.substring(index1+1); //el filename deberia tener el nombre del wav *-x.wav
 		
 		return getCorrespondingSystemUtterance(sessionFile,fileName);
 	}
