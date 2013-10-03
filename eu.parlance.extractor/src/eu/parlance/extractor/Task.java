@@ -23,6 +23,29 @@ public class Task {
 	
 	double avgWordsPerSystemTurn;
 	
+	String helloSysDact;
+	String confirmSysDact;
+	String requestSysDact;
+	String informSysDact;
+	String nullSysDact;
+	String givetokenSysDact;
+	String goodbyeSysDact;
+	String helloUserSemihyp;
+	String confirmUserSemihyp;
+	String informUserSemihyp;
+	String givetokenUserSemihyp;
+	String requestUserSemihyp;
+	String nullUserSemihyp;
+	String byeUserSemihyp;
+	
+	public String getByeUserSemihyp() {
+		return byeUserSemihyp;
+	}
+
+	public void setByeUserSemihyp(String byeUserSemihyp) {
+		this.byeUserSemihyp = byeUserSemihyp;
+	}
+
 	public void setGoal(String goal) {	
 		this.goal = goal;
 	}
@@ -146,5 +169,109 @@ public class Task {
 
 	public void setAvgWordsPerSystemTurn(double avgWordsPerSystemTurn) {
 		this.avgWordsPerSystemTurn = avgWordsPerSystemTurn;
+	}
+
+	public String getHelloSysDact() {
+		return helloSysDact;
+	}
+
+	public void setHelloSysDact(String helloSysDact) {
+		this.helloSysDact = helloSysDact;
+	}
+
+	public String getRequestSysDact() {
+		return requestSysDact;
+	}
+
+	public void setRequestSysDact(String requestSysDact) {
+		this.requestSysDact = requestSysDact;
+	}
+
+	public String getInformSysDact() {
+		return informSysDact;
+	}
+
+	public void setInformSysDact(String informSysDact) {
+		this.informSysDact = informSysDact;
+	}
+
+	public String getNullSysDact() {
+		return nullSysDact;
+	}
+
+	public void setNullSysDact(String nullSysDact) {
+		this.nullSysDact = nullSysDact;
+	}
+
+	public String getGivetokenSysDact() {
+		return givetokenSysDact;
+	}
+
+	public void setGivetokenSysDact(String givetokenSysDact) {
+		this.givetokenSysDact = givetokenSysDact;
+	}
+
+	public String getGoodbyeSysDact() {
+		return goodbyeSysDact;
+	}
+
+	public void setGoodbyeSysDact(String goodbyeSysDact) {
+		this.goodbyeSysDact = goodbyeSysDact;
+	}
+
+	public String getInformUserSemihyp() {
+		return informUserSemihyp;
+	}
+
+	public void setInformUserSemihyp(String informUserSemihyp) {
+		this.informUserSemihyp = informUserSemihyp;
+	}
+
+	public String getRequestUserSemihyp() {
+		return requestUserSemihyp;
+	}
+
+	public void setRequestUserSemihyp(String requestUserSemihyp) {
+		this.requestUserSemihyp = requestUserSemihyp;
+	}
+
+	public String getConfirmSysDact() {
+		return confirmSysDact;
+	}
+
+	public void setConfirmSysDact(String confirmSysDact) {
+		this.confirmSysDact = confirmSysDact;
+	}
+
+	public String getHelloUserSemihyp() {
+		return helloUserSemihyp;
+	}
+
+	public void setHelloUserSemihyp(String helloUserSemihyp) {
+		this.helloUserSemihyp = helloUserSemihyp;
+	}
+
+	public String getConfirmUserSemihyp() {
+		return confirmUserSemihyp;
+	}
+
+	public void setConfirmUserSemihyp(String confirmUserSemihyp) {
+		this.confirmUserSemihyp = confirmUserSemihyp;
+	}
+
+	public String getGivetokenUserSemihyp() {
+		return givetokenUserSemihyp;
+	}
+
+	public void setGivetokenUserSemihyp(String givetokenUserSemihyp) {
+		this.givetokenUserSemihyp = givetokenUserSemihyp;
+	}
+
+	public String getNullUserSemihyp() {
+		return nullUserSemihyp;
+	}
+
+	public void setNullUserSemihyp(String nullUserSemihyp) {
+		this.nullUserSemihyp = nullUserSemihyp;
 	}
 }
