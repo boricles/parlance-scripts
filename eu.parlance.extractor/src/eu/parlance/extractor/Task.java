@@ -37,6 +37,7 @@ public class Task {
 	String requestUserSemihyp;
 	String nullUserSemihyp;
 	String byeUserSemihyp;
+	String afirmUserSemihyp;
 	
 	public String getByeUserSemihyp() {
 		return byeUserSemihyp;
@@ -273,5 +274,13 @@ public class Task {
 
 	public void setNullUserSemihyp(String nullUserSemihyp) {
 		this.nullUserSemihyp = nullUserSemihyp;
+	}
+
+	public String getAfirmUserSemihyp() {
+		return afirmUserSemihyp;
+	}
+
+	public void setAfirmUserSemihyp(String afirmUserSemihyp) {
+		this.afirmUserSemihyp = afirmUserSemihyp;
 	}
 }

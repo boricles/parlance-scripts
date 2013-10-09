@@ -66,7 +66,7 @@ public class UnigramExtractor {
 			String nullSysDact, String givetokenSysDact, String goodbyeSysDact,
 			String helloUserSemihyp, String confirmUserSemihyp,
 			String informUserSemihyp, String givetokenUserSemihyp, String requestUserSemihyp, 
-			String nullUserSemihyp, String byeUserSemihyp) {
+			String nullUserSemihyp, String byeUserSemihyp, String afirmUserSemihyp) {
 
 		Statement statement = null;
 
@@ -84,6 +84,7 @@ public class UnigramExtractor {
 				+ ", requestUserSemihyp = " + requestUserSemihyp
 				+ ", nullUserSemihyp = " + nullUserSemihyp
 				+ ", byeUserSemihyp = " + byeUserSemihyp
+				+ ", afirmUserSemihyp = " + afirmUserSemihyp
 				+ " WHERE id = " + id;
 		System.out.println("id ============================================ "
 				+ id);
@@ -222,59 +223,76 @@ public class UnigramExtractor {
 					System.out.println("+++++++++++++++++++++++++++++++++goodbye() found."+ goodbyeCount);
 				}
 			}
-			NodeList semihypsList = doc.getElementsByTagName("semihyp");
-
-			int semihyps = semihypsList.getLength();
-
+			
+			
 			int informUserCount = 0;
 			int requestUserCount = 0;
 			int confirmUserCount = 0;
 			int givetokenUserCount = 0;
 			int nullUserCount = 0;
 			int byeUserCount = 0;
+			int afirmUserCount = 0;
 			
-			for (int j = 0; j < semihyps; j++) {
-				Node nn = semihypsList.item(j);
-				String textU = nn.getFirstChild().getTextContent();
+			NodeList semiList = doc.getElementsByTagName("semi");
+			
+			int semis = semiList.getLength();
+			
 
+			for (int j = 0; j < semis; j++) {
+				
+				Node nn = semiList.item(j);
+					
+				NodeList chidList = nn.getChildNodes();
+					
+				//We need just the first semihyp, no all of them 
+				Node n0 = chidList.item(1);
+				String textU = n0.getTextContent();
+					
 				System.out.println("textU " + textU);
-
+	
 				if (textU.startsWith("inform(")) {
-					System.out.println("inform() found. +1");
 					informUserCount++;
 					t.setInformUserSemihyp(Integer.toString(informUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++inform() found." + informUserCount);
 				}
 				
 				if (textU.startsWith("request(")) {
-					System.out.println("request() found. +1");
 					requestUserCount++;
 					t.setRequestUserSemihyp(Integer.toString(requestUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++request() found." + requestUserCount);
 				}
-
+	
 				if (textU.startsWith("confirm(")) {
 					System.out.println("confirm() found. +1");
 					confirmUserCount++;
 					t.setConfirmUserSemihyp(Integer.toString(confirmUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++confirm() found." + confirmUserCount);
 				}
-				
+					
 				if (textU.startsWith("givetoken(")) {
 					System.out.println("givetoken() found. +1");
 					givetokenUserCount++;
 					t.setGivetokenUserSemihyp(Integer.toString(givetokenUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++givetoken() found." + givetokenUserCount);
 				}
-				
+					
 				if (textU.startsWith("null(")) {
-					System.out.println("null() found. +1");
 					nullUserCount++;
 					t.setNullUserSemihyp(Integer.toString(nullUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++null() found." + nullUserCount);
 				}
-				
+					
 				if (textU.startsWith("bye(")) {
-					System.out.println("bye() found. +1");
 					byeUserCount++;
 					t.setByeUserSemihyp(Integer.toString(byeUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++bye() found." + byeUserCount);
 				}
-				
+					
+				if (textU.startsWith("affirm(")) {
+					afirmUserCount++;
+					t.setAfirmUserSemihyp(Integer.toString(afirmUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++affirm() found." + afirmUserCount);
+				}
 				
 				
 			}
@@ -340,7 +358,8 @@ public class UnigramExtractor {
 				ex.updateParameters(task.getId(), task.getHelloSysDact(), task.getConfirmSysDact(), task.getRequestSysDact(),
 						task.getInformSysDact(), task.getNullSysDact(), task.getGivetokenSysDact(), task.getGoodbyeSysDact(),
 						task.getHelloUserSemihyp(), task.getConfirmUserSemihyp(), task.getInformUserSemihyp(),
-						task.getGivetokenSysDact(), task.getRequestUserSemihyp(), task.getNullUserSemihyp(), task.getByeUserSemihyp());
+						task.getGivetokenSysDact(), task.getRequestUserSemihyp(), task.getNullUserSemihyp(),
+						task.getByeUserSemihyp(), task.getAfirmUserSemihyp());
 			}
 
 		} catch (java.lang.Exception ex) {
