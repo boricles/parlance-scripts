@@ -66,7 +66,8 @@ public class UnigramExtractor {
 			String nullSysDact, String givetokenSysDact, String goodbyeSysDact,
 			String helloUserSemihyp, String confirmUserSemihyp,
 			String informUserSemihyp, String givetokenUserSemihyp, String requestUserSemihyp, 
-			String nullUserSemihyp, String byeUserSemihyp, String afirmUserSemihyp) {
+			String nullUserSemihyp, String byeUserSemihyp, String afirmUserSemihyp,
+			String repeatUserSemihyp, String helpUserSemihyp, String restartUserSemihyp) {
 
 		Statement statement = null;
 
@@ -85,6 +86,9 @@ public class UnigramExtractor {
 				+ ", nullUserSemihyp = " + nullUserSemihyp
 				+ ", byeUserSemihyp = " + byeUserSemihyp
 				+ ", afirmUserSemihyp = " + afirmUserSemihyp
+				+ ", repeatUserSemihyp = " + repeatUserSemihyp
+				+ ", helpUserSemihyp = " + helpUserSemihyp
+				+ ", restartUserSemihyp = " + restartUserSemihyp
 				+ " WHERE id = " + id;
 		System.out.println("id ============================================ "
 				+ id);
@@ -232,6 +236,10 @@ public class UnigramExtractor {
 			int nullUserCount = 0;
 			int byeUserCount = 0;
 			int afirmUserCount = 0;
+			int repeatUserCount = 0;
+			int helpUserCount = 0;
+			int restartUserCount = 0;
+			
 			
 			NodeList semiList = doc.getElementsByTagName("semi");
 			
@@ -294,16 +302,27 @@ public class UnigramExtractor {
 					System.out.println("++++++++++++++++++++++++++++++++affirm() found." + afirmUserCount);
 				}
 				
+				if (textU.startsWith("repeat(")) {
+					repeatUserCount++;
+					t.setRepeatUserSemihyp(Integer.toString(repeatUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++affirm() found." + repeatUserCount);
+				}
 				
+				if (textU.startsWith("help(")) {
+					helpUserCount++;
+					t.setHelpUserSemihyp(Integer.toString(helpUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++affirm() found." + helpUserCount);
+				}
+				
+				if (textU.startsWith("restart(")) {
+					restartUserCount++;
+					t.setRestartUserSemihyp(Integer.toString(restartUserCount));
+					System.out.println("++++++++++++++++++++++++++++++++affirm() found." + restartUserCount);
+				}
 			}
 
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();
-			t.setHelloSysDact("0");
-			t.setRequestSysDact("0");
-			t.setInformSysDact("0");
-			t.setNullSysDact("0");
-			t.setGivetokenSysDact("0");
 		}
 
 	}
@@ -359,7 +378,8 @@ public class UnigramExtractor {
 						task.getInformSysDact(), task.getNullSysDact(), task.getGivetokenSysDact(), task.getGoodbyeSysDact(),
 						task.getHelloUserSemihyp(), task.getConfirmUserSemihyp(), task.getInformUserSemihyp(),
 						task.getGivetokenSysDact(), task.getRequestUserSemihyp(), task.getNullUserSemihyp(),
-						task.getByeUserSemihyp(), task.getAfirmUserSemihyp());
+						task.getByeUserSemihyp(), task.getAfirmUserSemihyp(),
+						task.getRepeatUserSemihyp(), task.getHelpUserSemihyp(), task.getRestartUserSemihyp());
 			}
 
 		} catch (java.lang.Exception ex) {

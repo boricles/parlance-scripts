@@ -38,7 +38,29 @@ public class Task {
 	String nullUserSemihyp;
 	String byeUserSemihyp;
 	String afirmUserSemihyp;
+	String repeatUserSemihyp;
+	String helpUserSemihyp;
+	String restartUserSemihyp;
 	
+	String audio;
+	String system;
+	
+	public String getSystem() {
+		return system;
+	}
+
+	public void setSystem(String system) {
+		this.system = system;
+	}
+
+	public String getAudio() {
+		return audio;
+	}
+
+	public void setAudio(String audio) {
+		this.audio = audio;
+	}
+
 	public String getByeUserSemihyp() {
 		return byeUserSemihyp;
 	}
@@ -282,5 +304,29 @@ public class Task {
 
 	public void setAfirmUserSemihyp(String afirmUserSemihyp) {
 		this.afirmUserSemihyp = afirmUserSemihyp;
+	}
+
+	public String getRepeatUserSemihyp() {
+		return repeatUserSemihyp;
+	}
+
+	public void setRepeatUserSemihyp(String repeatUserSemihyp) {
+		this.repeatUserSemihyp = repeatUserSemihyp;
+	}
+
+	public String getHelpUserSemihyp() {
+		return helpUserSemihyp;
+	}
+
+	public void setHelpUserSemihyp(String helpUserSemihyp) {
+		this.helpUserSemihyp = helpUserSemihyp;
+	}
+
+	public String getRestartUserSemihyp() {
+		return restartUserSemihyp;
+	}
+
+	public void setRestartUserSemihyp(String restartUserSemihyp) {
+		this.restartUserSemihyp = restartUserSemihyp;
 	}
 }
