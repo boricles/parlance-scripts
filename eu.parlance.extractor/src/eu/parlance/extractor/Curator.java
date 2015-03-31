@@ -33,7 +33,8 @@ public class Curator {
 	
 	protected Connection getDatabaseConnection () {
 		  String driverClass = "com.mysql.jdbc.Driver";
-		  String connectionURL = "jdbc:mysql://172.18.3.150:3306/parlance_feedback?useUnicode=true&characterEncoding=UTF-8";
+		  //String connectionURL = "jdbc:mysql://172.18.3.150:3306/parlance_feedback?useUnicode=true&characterEncoding=UTF-8";
+		  String connectionURL = "jdbc:mysql://localhost:3306/parlance_feedback?useUnicode=true&characterEncoding=UTF-8";
 		  String connectionUser = "root";
 		  String connectionUserPassword = "root";
 		  
@@ -66,6 +67,7 @@ public class Curator {
 		    Statement stmt = connection.createStatement();
 		 
 		    //Execute the SQL statement and get the results in a Resultset
+		    //TODO MEJOR USAR system1_evaluation_answers_COPY !!!!!!!!!!!!!!!
 		    String query = "SELECT distinct * FROM system1_evaluation_answers where system = \'" + system +"\' and logfile like \'%" + folderLog+ "%\'";
 		    //System.out.println(query);
 		    ResultSet rs = stmt.executeQuery(query);

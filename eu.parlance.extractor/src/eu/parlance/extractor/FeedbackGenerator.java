@@ -20,28 +20,24 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+public class FeedbackGenerator {
 
-public class Extractor {
-
+	static Connection connection = null;
 	
-	public Extractor() {
+	public FeedbackGenerator() {
 		
 	}
 	
-	static Connection connection = null;
-	
 	protected Connection getDatabaseConnection () {
 		  String driverClass = "com.mysql.jdbc.Driver";
-		  //Boris server:
-		  //String connectionURL = "jdbc:mysql://172.18.3.150:3306/parlance_feedback?useUnicode=true&characterEncoding=UTF-8";
-		  //localhost:
+		  //172.18.3.193 -> Almu //localhost
+		  //172.18.3.150 -> Boris
 		  String connectionURL = "jdbc:mysql://localhost:3306/parlance_feedback?useUnicode=true&characterEncoding=UTF-8";
 		  String connectionUser = "root";
 		  String connectionUserPassword = "root";
@@ -77,7 +73,6 @@ public class Extractor {
 		    Statement stmt = connection.createStatement();
 		 
 		    //Execute the SQL statement and get the results in a Resultset
-		    //ResultSet rs = stmt.executeQuery("SELECT * FROM system1_evaluation_answers_copy");
 		    ResultSet rs = stmt.executeQuery("SELECT * FROM system1_evaluation_answers");
 		 
 		    // Iterate through the ResultSet, displaying two values
@@ -90,134 +85,36 @@ public class Extractor {
 		}
 		return null;
 	}	
-	
-	
-	public void updateAdditionalParameters(String id, String userTurns, String systemTurns, String length, double avgWords) {
-		Statement statement = null;
- 
-		int totalTurns = Integer.parseInt(userTurns) + Integer.parseInt(systemTurns); 
-		
-		//if totalTurns > 4 
-		
-		//String updateTableSQL = "UPDATE system1_evaluation_answers_copy"
-		String updateTableSQL = "UPDATE system1_evaluation_answers"
-				+ " SET UserTurns = " + userTurns +  " , SystemTurns = " + systemTurns + ", TotalTurns = " + totalTurns + ", Length = \'" + length + "\', avgWordsPerSystemTurn = " + avgWords   
-				+ " WHERE id = " + id ;
-		
-		System.out.println("id ================================================ " + id);
-		System.out.println("userTurns ========================================= " + userTurns);
-		System.out.println("systemTurns ======================================= " + systemTurns);
-		System.out.println("totalTurns ======================================== " + totalTurns);
-		System.out.println("length ============================================ " + length);
-		System.out.println("avgWords ========================================== " + avgWords);
- 
-		try {
-			  /*if (connection == null)
-				  connection = getDatabaseConnection();
-			  
-			  String driverClass = "com.mysql.jdbc.Driver";
-			  String connectionURL = "jdbc:mysql://172.18.3.150:3306/parlance_feedback?useUnicode=true&characterEncoding=UTF-8";
-			  String connectionUser = "root";
-			  String connectionUserPassword = "root";
 
-			  Class.forName(driverClass);
-
-			  connection = DriverManager.getConnection (connectionURL,connectionUser,connectionUserPassword);*/
-			statement = connection.createStatement();
- 
-			//System.out.println(updateTableSQL);
- 
-			// execute update SQL stetement
-			statement.execute(updateTableSQL);
+	public static boolean folderExists(String logFolderPath, String logFile) {
+		boolean exists = false;
+		
+		int indexLogWord = logFile.indexOf("log/");
+		if (indexLogWord != -1) {
+			final String aux = logFile.substring(indexLogWord+4);
+			File dir = new File(logFolderPath);
+			File[] matchingFiles = dir.listFiles(new FilenameFilter() {
+			    public boolean accept(File dir, String name) {
+			    	return name.equals(aux);
+			    }
+			});
+			if (matchingFiles.length == 1 && matchingFiles[0].getName().equals(aux))
+				exists = true;
+		} else {
+			final String aux = logFile;
+			File dir = new File(logFolderPath);
+			File[] matchingFiles = dir.listFiles(new FilenameFilter() {
+			    public boolean accept(File dir, String name) {
+			    	return name.equals(aux);
+			    }
+			});
+			if (matchingFiles.length == 1 && matchingFiles[0].getName().equals(aux))
+				exists = true;
 			
-			if (statement != null) { 
-				statement.close();
-				//connection.close();
-				//connection = null;
-			}
- 
-			//System.out.println("Record is updated to DBUSER table!");
- 
-		} catch (SQLException e) {
- 
-			System.out.println(e.getMessage());
- 
-		/*} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();*/
-		} finally {
-			/*
-			if (statement != null) {
-				statement.close();
-			}
- 
-			if (dbConnection != null) {
-				dbConnection.close();
-			}*/
- 
 		}
+		return exists;
 	}
 		
-	
-	public void updateSystemField(String id, String system) {
-		Statement statement = null;
- 
-		//String updateTableSQL = "UPDATE system1_evaluation_answers_copy"
-		String updateTableSQL = "UPDATE system1_evaluation_answers"
-				+ " SET system = \'" + system + "\' "
-				+ " WHERE id = " + id ;
- 
-		
-		System.out.println("system =============================== " + system);
-		
-		try {
-			  /*if (connection == null)
-				  connection = getDatabaseConnection();
-			  
-			  String driverClass = "com.mysql.jdbc.Driver";
-			  String connectionURL = "jdbc:mysql://172.18.3.150:3306/parlance_feedback?useUnicode=true&characterEncoding=UTF-8";
-			  String connectionUser = "root";
-			  String connectionUserPassword = "root";
-
-			  Class.forName(driverClass);
-
-			  connection = DriverManager.getConnection (connectionURL,connectionUser,connectionUserPassword);*/
-			statement = connection.createStatement();
- 
-			//System.out.println(updateTableSQL);
- 
-			// execute update SQL stetement
-			statement.execute(updateTableSQL);
-			
-			if (statement != null) { 
-				statement.close();
-				//connection.close();
-				//connection = null;
-			}
- 
-			//System.out.println("Record is updated to DBUSER table!");
- 
-		} catch (SQLException e) {
- 
-			System.out.println(e.getMessage());
- 
-		/*} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();*/
-		} finally {
-			/*
-			if (statement != null) {
-				statement.close();
-			}
- 
-			if (dbConnection != null) {
-				dbConnection.close();
-			}*/
- 
-		}
- 
-	}
-	
 	
 	public String getTaskGoal(int taskID, String taskFile){
 		
@@ -293,96 +190,6 @@ public class Extractor {
 	}
 	
 	
-	public static boolean folderExists(String logFolderPath, String logFile) {
-		boolean exists = false;
-		
-		int indexLogWord = logFile.indexOf("log/");
-		if (indexLogWord != -1) {
-			final String aux = logFile.substring(indexLogWord+4);
-			File dir = new File(logFolderPath);
-			File[] matchingFiles = dir.listFiles(new FilenameFilter() {
-			    public boolean accept(File dir, String name) {
-			    	return name.equals(aux);
-			    }
-			});
-			if (matchingFiles.length == 1 && matchingFiles[0].getName().equals(aux))
-				exists = true;
-		} else {
-			final String aux = logFile;
-			File dir = new File(logFolderPath);
-			File[] matchingFiles = dir.listFiles(new FilenameFilter() {
-			    public boolean accept(File dir, String name) {
-			    	return name.equals(aux);
-			    }
-			});
-			if (matchingFiles.length == 1 && matchingFiles[0].getName().equals(aux))
-				exists = true;
-			
-		}
-		return exists;
-	}
-	
-	public static void  setAdditionalParameters(Task t, String logFolderPath,String logFile) {
-		try {
-			int indexLogWord = logFile.indexOf("log/");
-			String sessionFile = "";
-			if (indexLogWord != -1) {
-				String aux = logFile.substring(indexLogWord+4);
-				sessionFile = logFolderPath + "/" +aux + "/session.xml";
-			}
-			else
-				sessionFile = logFolderPath + "/" +logFile + "/session.xml";
-			
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse (new File(sessionFile));
-			
-			NodeList systemTurnsList = doc.getElementsByTagName("systurn");
-
-			int systemTurns = systemTurnsList.getLength();
-			
-			
-			//count the words of a system turn
-			NodeList promptList = doc.getElementsByTagName("prompt");
-			
-			int numWords = 0; 
-					
-			for (int i=0; i<promptList.getLength()-1; i++ ) {
-				Node promp = promptList.item(i);
-				String text = promp.getFirstChild().getTextContent();
-				
-				numWords += text.split("\\s+").length;
-		
-			}
-			
-			double avgWords = numWords / systemTurns;
-			
-			NodeList userTurnsList = doc.getElementsByTagName("userturn");
-
-			int userTurns  = userTurnsList.getLength();
-			
-			String length = "";
-			NodeList audioLengths = doc.getElementsByTagName("stereoaudio");
-			Element e = (Element)audioLengths.item(0);
-			length =  e.getAttributes().getNamedItem("endtime").getNodeValue();
-			
-			t.setSystemTurns(systemTurns+"");
-			t.setUserTurns(userTurns+"");
-			t.setLength(length);
-			t.setAvgWordsPerSystemTurn(avgWords);
-			
-			
-		}
-		catch (java.lang.Exception ex) {
-			ex.printStackTrace();
-			t.setSystemTurns("0");
-			t.setUserTurns("0");
-			t.setLength("0.0");
-			t.setAvgWordsPerSystemTurn(0.0);			
-		}
-
-	}
-	
 	public static void main(String []args) {
 		try {
 			//System.out.println(args.length);
@@ -393,13 +200,12 @@ public class Extractor {
 			String taskFilePath = args [0];
 			String logFolderPath = args [1];
 			String system = args[2];
-			Extractor ex = new Extractor();
+			FeedbackGenerator ex = new FeedbackGenerator();
 			connection = ex.getDatabaseConnection();
 			ResultSet rs = ex.getDatabaseConent();
 			
 			List<Task> tasks = new ArrayList<Task>();
-			
-			
+						
 			while (rs.next()) {
 				//String q1 = rs.getString("q1");
 				//if (!q1.contains("No restaurant found")) {
@@ -430,7 +236,7 @@ public class Extractor {
 						//t.setQ8(rs.getString("q8"));
 						t.setTaskID(rs.getString("taskID"));
 						
-						setAdditionalParameters(t,logFolderPath,logFile);
+						//setAdditionalParameters(t,logFolderPath,logFile);
 						
 						tasks.add(t);
 					}
@@ -439,8 +245,6 @@ public class Extractor {
 				
 			}
 			
-			
-			//Para generar Pirros feedback files:
 			for (Task task : tasks) {
 				String fileContent = new String();
 				fileContent = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
@@ -472,14 +276,10 @@ public class Extractor {
 				fileContent += "<task>" +task.getTaskID() + "</task>\n";				
 				fileContent += "</feedback>";
 
-				ex.updateSystemField (task.getId(),system);
-				ex.updateAdditionalParameters(task.getId(),task.getUserTurns(),task.getSystemTurns(),task.getLength(),task.getAvgWordsPerSystemTurn());
-
+				//ex.updateSystemField (task.getId(),system);
+				//ex.updateAdditionalParameters(task.getId(),task.getUserTurns(),task.getSystemTurns(),task.getLength(),task.getAvgWordsPerSystemTurn());
 				
-				/*
-				 * Ya incluido en otro script (FeedbackGenerator.java)
-				 * 
-				//Descomentado para Pirros feedback files:
+				
 				File file = new File("feedback/"+task.getLogfile());
 				if (!file.exists())
 					if (!file.mkdir()) {
@@ -489,7 +289,7 @@ public class Extractor {
 				PrintWriter write = new PrintWriter("feedback/"+task.getLogfile()+"/feedback.xml");
 				write.print(fileContent);
 				write.close();
-				*/
+				
 			}
 			
 			
@@ -501,5 +301,6 @@ public class Extractor {
 		
 		
 	}
+	
 	
 }

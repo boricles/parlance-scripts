@@ -53,6 +53,7 @@ public class AudioExtractor {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM system1_evaluation_answers");
+					//.executeQuery("SELECT * FROM system1_evaluation_answers_copy");
 			return rs;
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();
@@ -68,12 +69,14 @@ public class AudioExtractor {
 		int indexLogWord = logfile.indexOf("log/");
 		String aux = logfile.substring(indexLogWord+4);
 		
-		String audioStr = "http://parlancelogs.isoco.net/evaluation/Evaluation1/" 
+		//String audioStr = "http://parlancelogs.isoco.net/evaluation/Evaluation1/"
+		String audioStr = "http://parlancelogs.isoco.net/evaluation/Evaluation15/" 
 				+ system + "/" + aux + "/" + audio.trim();
 		
 		String taskHyperlink = "http://glocal.isoco.net/parlance/task_page_" + taskID + ".html";
 
 		String updateTableSQL = "UPDATE system1_evaluation_answers"
+		//String updateTableSQL = "UPDATE system1_evaluation_answers_copy"
 				+ " SET audio = \'" + audioStr + "\' "
 				+ " , taskHyperlink = \'" + taskHyperlink + "\' "
 				+ " WHERE id = " + id;
